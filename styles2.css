@@ -1,0 +1,391 @@
+body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    text-align: center;
+    margin: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.buttons-container {
+    margin-bottom: 20px;
+}
+
+.buttons-table {
+    width: 90%;
+    table-layout: fixed;
+}
+
+.buttons-table td {
+    padding: 5px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 15px; /* مسافة داخلية للنص */
+    font-size: 20px; /* حجم الخط */
+    cursor: pointer; /* تغيير المؤشر عند التمرير */
+    border: 1px solid #ccc; /* إطار خفيف */
+    background-color: #f0f0f0; /* لون الخلفية الافتراضي */
+    transition: background-color 0.3s, transform 0.2s; /* انتقال ناعم عند التفاعل */
+    width: 100%; /* عرض الزر يمتد بالكامل داخل الحاوية */
+    height: 80px; /* تحديد ارتفاع الزر */
+    border-radius: 8px; /* زوايا مستديرة */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+    
+}
+
+
+#button1 {
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+/* التأثير عند تمرير الفأرة */
+button:hover {
+    background-color: #e9ecef; /* تغيير لون الخلفية عند التمرير */
+    transform: scale(1.02); /* تكبير الزر قليلاً */}
+
+.print-btn {
+    margin: auto;
+        width: 60%;
+        font-size: 20px;
+
+    background-color: #4CAF50;
+    color: white;
+}
+
+.clear-btn {
+   width: 60%;
+   font-size: 16px;
+   height: 40px;
+    background-color: #f44336;
+    color: white;
+}
+
+main {
+    margin-top: 20px;
+}
+    
+table {
+    width: 60%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border: 0px solid #ccc;
+}
+table th:first-child,
+table td:first-child {
+    width: 5    0px; /* عرض عمود العدد */
+    text-align: center; /* توسيط النص */
+}
+
+
+tss {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center; }
+
+th {
+    background-color: #f8f8f8;
+}
+
+tfoot td {
+    font-weight: bold;
+}
+
+.no-print {
+    display: table-cell;
+}
+
+@media print {
+    .no-print {
+        display: none ;
+    }
+
+    #order-table {
+        margin: auto;
+        width: 90%;
+        border-collapse: collapse;
+        
+    }
+
+    #order-table th, #order-table td {
+        border: 1px solid #000;
+        padding: 10px;
+        text-align: center;
+    }
+
+    #order-table th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    body {
+        margin: 0;
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    table #custom-row {
+        background-color: #353535;
+        font-weight: bold;
+        text-align: center;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #total-row {
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        border-top: 2px solid #000; /* خط علوي واضح */
+        background-color: #f9f9f9; /* لون خلفية مميز */
+    }
+    
+
+    #order-number {
+        font-size: 24px !important; /* تكبير الخط */
+        font-weight: bold !important; /* جعل الخط عريضًا */
+    }
+
+    #order-number-label {
+        font-size: 24px !important; /* تكبير الخط */
+        font-weight: bold !important; /* جعل الخط عريضًا */
+    }
+
+}
+@media print {
+    body {
+        font-family: Arial, sans-serif;
+        direction: rtl;
+
+    }
+
+    h2 {
+        margin-bottom: 10px;
+        text-align: center;
+    /* فاتورةالطلب */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: auto;
+        border: 1px solid #000;
+
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: center;
+        
+    }
+
+    .no-print {
+        display: none; /* لإخفاء العناصر التي لا نريد طباعتها */
+    }
+
+    .thank-you::after {
+        content: "";
+        display: block;
+        height: 2000px; /* مسافة فارغة بعد العبارة */
+    
+    }
+}
+
+/* تنسيق الحاوية الرئيسية */
+.container {
+    display: flex; /* تقسيم الصفحة باستخدام Flexbox */
+    justify-content: space-between; /* توزيع المسافة بين القسمين */
+    align-items: flex-start; /* محاذاة العناصر من الأعلى */
+    gap: 20px; /* المسافة بين الأقسام */
+    margin: 20px; /* تباعد حول الصفحة */
+}
+
+/* تنسيق القسم الرئيسي */
+.main-content {
+    flex: 3; /* عرض القسم الرئيسي: 75% */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* تنسيق القسم الجانبي */
+.sidebar {
+    flex: 1; /* عرض القسم الجانبي: 25% */
+    background-color: #e9ecef;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-height: 940px; /* الطول الابتدائي */
+    height: auto; /* الطول يتكيف مع المحتوى */
+    box-sizing: border-box; /* يضمن حساب الحواف والحشوة ضمن الأبعاد */
+
+
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.thank-you {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+
+
+.delete-btn {
+    background-color: #ff4d4d; /* لون خلفية أحمر */
+    color: #fff; /* لون النص أبيض */
+    border: none; /* إزالة الحدود */
+    border-radius: 5px; /* زوايا مستديرة */
+    padding: 5px 10px; /* مسافة داخلية */
+    font-size: 14px; /* حجم النص */
+    cursor: pointer; /* تغيير المؤشر عند التمرير */
+    transition: background-color 0.3s, transform 0.2s; /* تأثير الانتقال */
+    height: 100%;
+}
+
+/* التأثير عند التمرير بالفأرة */
+.delete-btn:hover {
+    background-color: #ff3333; /* لون أغمق عند التمرير */
+    transform: scale(1.05); /* تكبير الزر قليلاً */
+}
+
+/* التأثير عند الضغط */
+.delete-btn:active {
+    background-color: #cc0000; /* لون أكثر قتامة عند الضغط */
+    transform: scale(0.95); /* تصغير الزر قليلاً */
+}
+
+.full-width-message {
+    width: 100%; /* تأخذ عرض الصفحة بالكامل */
+    background-color: #ffa500; /* لون خلفية برتقالي */
+    color: #fff; /* لون النص أبيض */
+    text-align: center; /* محاذاة النص في المنتصف */
+    padding: 15px 0; /* مسافة داخلية */
+    font-size: 18px; /* حجم الخط */
+    font-weight: bold; /* جعل النص عريض */
+    border: none; /* إزالة الإطار */
+    margin-bottom: 20px; /* مسافة أسفل العبارة */
+    border-radius: 5px; /* زوايا مستديرة قليلاً */
+}
+.edit-btn {
+    background-color: #007BFF; /* لون خلفية أزرق */
+    color: white; /* لون النص أبيض */
+    border: none; /* إزالة الحدود */
+    border-radius: 5px; /* زوايا مستديرة */
+    padding: 5px 10px; /* مسافة داخلية */
+    cursor: pointer; /* تغيير المؤشر عند التمرير */
+    transition: background-color 0.3s, transform 0.2s; /* تأثيرات ناعمة */
+}
+
+.edit-btn:hover {
+    background-color: #0056b3; /* لون أغمق عند التمرير */
+}
+
+
+.report-btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.report-btn:hover {
+    background-color: #0056b3;
+}
+
+#report-password {
+    margin-top: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.edit-btn {
+    background-color: #ffc107;
+    color: black;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+    background-color: #e0a800;
+}
+@media print {
+
+
+    /* التأكد من عرض العناصر المطبوعة بشكل جيد */
+    body {
+        font-family: Arial, sans-serif;
+        direction: rtl;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: auto;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: center;
+    }
+}
+
+
+.payment-method {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.payment-method label {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+
+
+
+
