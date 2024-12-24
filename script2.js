@@ -142,7 +142,20 @@ function printDirectly() {
         return;
     }
 
-    // التحقق من اختيار طريقة الدفع
+    const printTable = table.cloneNode(true);
+
+    // حذف العمود الخاص بالحذف من نسخة الجدول
+    const rows = printTable.rows;
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].cells.length > 3) {
+            rows[i].deleteCell(3); // حذف العمود الرابع (عمود زر الحذف)
+        }
+    }
+
+    const now = new Date();
+    const orderDate = now.toLocaleDateString();
+    const orderTime = now.toLocaleTimeString();
+
     const madaAmount = parseFloat(document.getElementById('mada-amount').value) || 0;
     const cashAmount = parseFloat(document.getElementById('cash-amount').value) || 0;
     const totalAmount = parseFloat(document.getElementById('total-price').textContent.replace(' ريال', '')) || 0;
@@ -152,17 +165,6 @@ function printDirectly() {
         return;
     }
 
-    const printTable = table.cloneNode(true);
-    const rows = printTable.rows;
-    for (let i = 0; i < rows.length; i++) {
-        if (rows[i].cells.length > 3) {
-            rows[i].deleteCell(3);
-        }
-    }
-
-    const now = new Date();
-    const orderDate = now.toLocaleDateString();
-    const orderTime = now.toLocaleTimeString();
     const remaining = (cashAmount > totalAmount) ? (cashAmount - totalAmount) : 0;
 
     const paymentDetails = `
@@ -200,8 +202,8 @@ function printDirectly() {
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
                     <p>شكراً لتعاملكم معنا</p>
+                    <div style="height: 1000px;"></div>
                 </div>
-                <div style="height: 1000px;"></div>
             </body>
             </html>
         `;
@@ -213,7 +215,15 @@ function printDirectly() {
 
         document.body.innerHTML = originalContent;
 
-        saveEditedOrder(); // حفظ التعديلات
+        // تحديث رقم الطلب بعد الطباعة
+        const currentOrderNumber = parseInt(document.getElementById("order-number").textContent);
+        const nextOrderNumber = currentOrderNumber + 1;
+        document.getElementById("order-number").textContent = nextOrderNumber;
+
+        // تخزين رقم الطلب الجديد في LocalStorage
+        localStorage.setItem("lastOrderNumber", nextOrderNumber);
+
+        // مسح الجدول بعد الطباعة
         clearTable();
     };
 
@@ -221,6 +231,7 @@ function printDirectly() {
         alert("تعذر تحميل الشعار. يرجى التحقق من الرابط.");
     };
 }
+
 
 
 
