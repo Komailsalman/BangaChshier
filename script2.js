@@ -202,6 +202,7 @@ function printDirectly() {
         const currentOrderNumber = parseInt(document.getElementById("order-number").textContent);
         const nextOrderNumber = currentOrderNumber + 1;
         document.getElementById("order-number").textContent = nextOrderNumber;
+        saveOrdersToLocalStorage();
 
         // تخزين رقم الطلب الجديد في LocalStorage
         localStorage.setItem("lastOrderNumber", nextOrderNumber);
