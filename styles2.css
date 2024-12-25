@@ -75,7 +75,7 @@ main {
 }
     
 table {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     border-collapse: collapse;
     border: 0px solid #ccc;
@@ -118,7 +118,7 @@ tfoot td {
 
     #order-table {
         margin: auto;
-        width: 90%;
+        width: 100%;
         border-collapse: collapse;
         
     }
@@ -183,12 +183,28 @@ tfoot td {
 
     table {
         width: 100%;
+        table-layout: auto; /* السماح للأعمدة بتكييف عرضها حسب المحتوى */
         border-collapse: collapse;
         margin: auto;
         border: 1px solid #000;
 
     }
+ 
+    
+    .product-name {
+    white-space: nowrap; /* يمنع النص من الانقسام إلى سطرين */
+    overflow: hidden; /* يمنع النص من الخروج عن حدود الخلية */
+    text-overflow: ellipsis; /* يضيف "..." إذا تجاوز النص حدود الخلية */
+    width: auto; /* يجعل العرض مرنًا */
+    text-align: center; /* يضمن توسيط النص */
+}
 
+
+    
+
+td {
+    width: auto; /* السماح للخلايا بالتكيف مع المحتوى */
+}
     th, td {
         border: 1px solid #000;
         padding: 8px;
@@ -360,16 +376,14 @@ tfoot td {
         text-align: center;
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: auto;
-    }
+
 
     th, td {
         border: 1px solid #000;
         padding: 8px;
         text-align: center;
+        white-space: nowrap; /* منع النصوص من الانقسام إلى أكثر من سطر */
+
     }
 }
 
@@ -386,6 +400,30 @@ tfoot td {
 }
 
 
+.control-cell {
+    text-align: center; /* محاذاة الأزرار في منتصف الخلية */
+}
 
+.control-btn {
+    display: inline-block; /* جعل الأزرار بجانب بعضها */
+    padding: 5px 10px; /* حجم الزر */
+    font-size: 14px; /* حجم النص داخل الزر */
+    border-radius: 5px; /* زوايا مستديرة */
+    border: none; /* إزالة الإطار */
+    cursor: pointer; /* المؤشر عند التمرير فوق الزر */
+    margin: 0 2px; /* مسافة صغيرة بين الأزرار */
+    width: 30px; /* عرض الزر */
+    height: 30px; /* ارتفاع الزر */
+    line-height: 30px; /* محاذاة النص داخل الزر */
+    text-align: center; /* محاذاة النص في منتصف الزر */
+}
 
+.plus-btn {
+    background-color: #28a745; /* لون أخضر */
+    color: white;
+}
 
+.minus-btn {
+    background-color: #dc3545; /* لون أحمر */
+    color: white;
+}
