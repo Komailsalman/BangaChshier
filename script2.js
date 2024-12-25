@@ -41,76 +41,59 @@ document.getElementById("order-number").innerText = orderNumber;
 let totalPrice = 0; // الإجمالي
 
 function addToTable(productName, unitPrice) {
-    const tableBody = document.getElementById('product-table-body');
-    const totalPriceElement = document.getElementById('total-price');
+    const tableBody = document.getElementById("product-table-body");
+    const totalPriceElement = document.getElementById("total-price");
 
-    // قراءة الإجمالي الحالي
-    let totalPrice = parseFloat(totalPriceElement.textContent.replace(' ريال', '').trim()) || 0;
-
-    // التحقق مما إذا كان المنتج موجودًا بالفعل
-    let existingRow = Array.from(tableBody.rows).find(row => row.cells[1].textContent === productName);
-
-    if (existingRow) {
-        // إذا كان المنتج موجودًا، قم بزيادة العدد وتحديث السعر الإجمالي
-        const countCell = existingRow.cells[0];
-        const priceCell = existingRow.cells[2];
-
-        let count = parseInt(countCell.textContent) + 1; // زيادة العدد
-        countCell.textContent = count;
-
-        let totalProductPrice = count * unitPrice; // حساب السعر الإجمالي للمنتج
-        priceCell.textContent = `${totalProductPrice} ريال`;
-
-        // تحديث الإجمالي الكلي
-        totalPrice += unitPrice;
-        totalPriceElement.textContent = `${totalPrice} ريال`;
-        return;
-    }
-
-    // إنشاء صف جديد إذا كان المنتج غير موجود
-    const newRow = document.createElement('tr');
+    // إنشاء صف جديد
+    const newRow = document.createElement("tr");
 
     // إضافة العدد (ابدأ من 1)
-    const countCell = document.createElement('td');
+    const countCell = document.createElement("td");
     countCell.textContent = 1;
 
     // إضافة المنتج
-    const productCell = document.createElement('td');
+    const productCell = document.createElement("td");
+    productCell.classList.add("product-name"); // إضافة الكلاس "product-name"
     productCell.textContent = productName;
 
-    // إضافة السعر (ابدأ بالسعر الفردي)
-    const priceCell = document.createElement('td');
+    // إضافة السعر
+    const priceCell = document.createElement("td");
     priceCell.textContent = `${unitPrice} ريال`;
 
-    // إضافة زر الحذف
-    const deleteCell = document.createElement('td');
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'حذف';
-    deleteButton.classList.add('delete-btn');
-    deleteButton.onclick = () => {
-        // خصم السعر الإجمالي للمنتج عند الحذف
-        const count = parseInt(countCell.textContent);
-        totalPrice -= count * unitPrice; 
-        totalPriceElement.textContent = `${totalPrice} ريال`;
+    // إضافة زري "+" و "-"
+    const controlCell = document.createElement("td");
+    controlCell.classList.add("control-cell");
 
-        // حذف الصف
-        tableBody.removeChild(newRow);
-    };
-    deleteCell.appendChild(deleteButton);
+    const plusButton = document.createElement("button");
+    plusButton.textContent = "+";
+    plusButton.classList.add("control-btn", "plus-btn");
+    plusButton.onclick = () => updateRow(newRow, unitPrice, "add");
+
+    const minusButton = document.createElement("button");
+    minusButton.textContent = "-";
+    minusButton.classList.add("control-btn", "minus-btn");
+    minusButton.onclick = () => updateRow(newRow, unitPrice, "subtract");
+
+    controlCell.appendChild(plusButton);
+    controlCell.appendChild(minusButton);
 
     // إضافة الأعمدة إلى الصف
     newRow.appendChild(countCell);
     newRow.appendChild(productCell);
     newRow.appendChild(priceCell);
-    newRow.appendChild(deleteCell);
+    newRow.appendChild(controlCell);
 
     // إضافة الصف إلى الجدول
     tableBody.appendChild(newRow);
 
     // تحديث الإجمالي الكلي
-    totalPrice += unitPrice;
-    totalPriceElement.textContent = `${totalPrice} ريال`;
+    const currentTotal = parseFloat(
+        totalPriceElement.textContent.replace(" ريال", "").trim()
+    );
+    totalPriceElement.textContent = `${(currentTotal + unitPrice)} ريال`;
 }
+
+
 
 
 
@@ -343,18 +326,27 @@ function addCustomPriceProduct() {
     }
 
     // طلب السعر من المستخدم مع التحقق من صحته
-    let productPrice;
+    let productPrice = null;
     while (true) {
-        productPrice = parseFloat(prompt(`أدخل سعر ${productName} (ريال):`));
+        const input = prompt(`أدخل سعر ${productName} (ريال):`);
+        if (input === null) {
+            // إذا اختار المستخدم إلغاء أثناء إدخال السعر
+            alert("تم إلغاء إضافة المنتج.");
+            return; // إنهاء العملية بالكامل
+        }
+
+        productPrice = parseFloat(input);
         if (!isNaN(productPrice) && productPrice > 0) {
             break; // الخروج من الحلقة إذا كان السعر صالحًا
         }
         alert("يجب إدخال سعر صالح!"); // عرض رسالة إذا كان السعر غير صالح
     }
 
-    // إضافة المنتج إلى الجدول دائمًا كصف جديد
-    addNewRowToTable(productName, productPrice);
+    // إضافة المنتج إلى الجدول
+    addToTable(productName, productPrice);
 }
+
+
 
 function addNewRowToTable(productName, productPrice) {
     const tableBody = document.getElementById('product-table-body');
@@ -367,8 +359,11 @@ function addNewRowToTable(productName, productPrice) {
         <td>${productName}</td>
         <td>${productPrice} ريال</td>
         <td>
-            <button class="delete-btn" onclick="deleteProductRow(this)">
-                حذف
+        <td>
+        <button class="delete-btn" onclick="deleteRow(this)">حذف</button>
+    </td>
+    
+delete                    حذف
             </button>
         </td>
     `;
@@ -525,20 +520,45 @@ function clearTable() {
 
 
 function deleteRow(button) {
-    const row = button.parentNode.parentNode; // الحصول على الصف الخاص بالزر
-    const tableBody = document.getElementById("product-table-body");
-    const priceCell = row.cells[2].textContent.replace(' ريال', '').trim(); // قراءة السعر
-    const countCell = row.cells[0].textContent.trim(); // قراءة العدد
-    const totalPriceElement = document.getElementById("total-price");
+    const row = button.closest("tr"); // تحديد الصف
+    const countCell = row.cells[0]; // تحديد خلية العدد
+    const priceCell = row.cells[2]; // تحديد خلية السعر الإجمالي للمنتج
+    const totalPriceElement = document.getElementById("total-price"); // تحديد خلية الإجمالي الكلي
 
-    // حساب الإجمالي الجديد بعد حذف المنتج
-    const totalPrice = parseFloat(totalPriceElement.textContent.replace(' ريال', '').trim());
-    const newTotal = totalPrice - (parseFloat(priceCell) * parseInt(countCell));
-    totalPriceElement.textContent = `${newTotal} ريال`;
+    // قراءة العدد الحالي وسعر المنتج الإجمالي
+    let count = parseInt(countCell.textContent.trim());
+    let totalProductPrice = parseFloat(priceCell.textContent.replace(' ريال', '').trim());
+    const unitPrice = totalProductPrice / count; // حساب سعر الوحدة
 
-    // حذف الصف
-    tableBody.removeChild(row);
+    if (count > 1) {
+        // تقليل العدد إذا كان أكبر من 1
+        count--;
+        countCell.textContent = count;
+
+        // تحديث السعر الإجمالي للمنتج
+        totalProductPrice = (unitPrice * count);
+        priceCell.textContent = `${totalProductPrice} ريال`;
+
+        // تحديث الإجمالي الكلي
+        const currentTotal = parseFloat(totalPriceElement.textContent.replace(' ريال', '').trim());
+        totalPriceElement.textContent = `${(currentTotal - unitPrice)} ريال`;
+    } else {
+        // إذا كان العدد 1، احذف المنتج
+        const currentTotal = parseFloat(totalPriceElement.textContent.replace(' ريال', '').trim());
+        totalPriceElement.textContent = `${(currentTotal - totalProductPrice)} ريال`; // خصم السعر الإجمالي للمنتج
+        row.remove(); // حذف الصف
+    }
+
+    // إذا كان الجدول فارغًا، إعادة تعيين الإجمالي إلى 0
+    const rowsRemaining = document.querySelectorAll("#product-table-body tr");
+    if (rowsRemaining.length === 0) {
+        totalPriceElement.textContent = "0 ريال";
+    }
 }
+
+
+
+
 
 
 function saveEditedOrder() {
@@ -572,3 +592,40 @@ function saveEditedOrder() {
 
     localStorage.setItem('orders', JSON.stringify(savedOrders));
 }
+function updateRow(row, unitPrice, action) {
+    const countCell = row.cells[0];
+    const priceCell = row.cells[2];
+    const totalPriceElement = document.getElementById("total-price");
+
+    let count = parseInt(countCell.textContent.trim());
+    const totalProductPrice = parseFloat(priceCell.textContent.replace(" ريال", "").trim());
+    const currentTotal = parseFloat(totalPriceElement.textContent.replace(" ريال", "").trim());
+
+    if (action === "add") {
+        // زيادة العدد
+        count++;
+        countCell.textContent = count;
+        const newTotal = (unitPrice * count);
+        priceCell.textContent = `${newTotal} ريال`;
+        totalPriceElement.textContent = `${(currentTotal + unitPrice)} ريال`;
+    } else if (action === "subtract") {
+        if (count > 1) {
+            // تقليل العدد
+            count--;
+            countCell.textContent = count;
+            const newTotal = (unitPrice * count);
+            priceCell.textContent = `${newTotal} ريال`;
+            totalPriceElement.textContent = `${(currentTotal - unitPrice)} ريال`;
+        } else {
+            // حذف المنتج عند العدد 1
+            totalPriceElement.textContent = `${(currentTotal - totalProductPrice)} ريال`;
+            row.remove();
+        }
+    }
+
+    // التحقق إذا كان الجدول فارغًا، تعيين الإجمالي إلى 0
+    if (!document.querySelector("#product-table-body tr")) {
+        totalPriceElement.textContent = "0 ريال";
+    }
+}
+
