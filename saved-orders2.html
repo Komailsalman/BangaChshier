@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
+<!-- رابط CSS لـ SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- رابط JavaScript لـ SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <div style="margin-bottom: 20px;">
         <label for="filter-date">تصفية حسب التاريخ:</label>
@@ -91,10 +96,12 @@
         <thead>
             <tr>
                 <th>رقم الطلب</th>
-                <th>الإجمالي</th>
-                <th>تاريخ الطلب</th>
-                <th>وقت الطلب</th>
-                <th>حذف الطلب</th>
+        <th>الإجمالي</th>
+        <th>طريقة الدفع</th>
+        <th>تاريخ الطلب</th>
+        <th>وقت الطلب</th>
+        <th>تفاصيل الطلب</th>
+        <th>حذف الطلب</th>
 
             </tr>
         </thead>
@@ -116,8 +123,23 @@
 function filterOrdersByDate() {
     const selectedDate = document.getElementById('filter-date').value;
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    const mainTableBody = document.getElementById('main-orders-table-body');
-    const detailsContainer = document.getElementById('orders-details-container');
+const tableBody = document.getElementById('orders-body');
+
+orders.forEach((order) => {
+    console.log("Order Data:", order); // إضافة تسجيل للتأكد من وجود طريقة الدفع
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+        <td>${order.orderNumber}</td>
+        <td>${order.paymentMethod || "غير محدد"}</td>
+        <td>${order.totalPrice.toFixed(2)} ريال</td>
+        <td>${new Date(order.timestamp).toLocaleString()}</td>
+    `;
+
+    tableBody.appendChild(row);
+});
+
+        const detailsContainer = document.getElementById('orders-details-container');
 
     // مسح المحتويات السابقة
     mainTableBody.innerHTML = '';
@@ -225,8 +247,46 @@ function filterOrdersByDate() {
 // ربط زر الفلتر بالوظيفة
 document.getElementById('apply-filter-btn').addEventListener('click', filterOrdersByDate);
 
-        // تحميل الطلبات من Local Storage
-        function loadOrders() {
+function loadOrders() {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const savedOrdersBody = document.getElementById('saved-orders-body');
+
+    savedOrdersBody.innerHTML = ''; // تفريغ الجدول أولاً
+
+    orders.forEach(order => {
+        const row = document.createElement('tr');
+
+        // رقم الطلب
+        const orderNumberCell = document.createElement('td');
+        orderNumberCell.textContent = order.orderNumber;
+
+        // الإجمالي
+        const totalPriceCell = document.createElement('td');
+        totalPriceCell.textContent = `${order.totalPrice} ريال`;
+
+        // طريقة الدفع
+        const paymentMethodCell = document.createElement('td');
+        let paymentDetails = '';
+        if (order.payment) {
+            if (order.payment.mada > 0) {
+                paymentDetails += `مدى: ${order.payment.mada} ريال<br>`;
+            }
+            if (order.payment.cash > 0) {
+                paymentDetails += `كاش: ${order.payment.cash} ريال`;
+            }
+        } else {
+            paymentDetails = 'غير محدد';
+        }
+        paymentMethodCell.innerHTML = paymentDetails;
+
+        // إضافة الأعمدة إلى الصف
+        row.appendChild(orderNumberCell);
+        row.appendChild(totalPriceCell);
+        row.appendChild(paymentMethodCell);
+        savedOrdersBody.appendChild(row);
+    });
+}
+
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
     const mainTableBody = document.getElementById('main-orders-table-body');
     const detailsContainer = document.getElementById('orders-details-container');
@@ -241,82 +301,65 @@ document.getElementById('apply-filter-btn').addEventListener('click', filterOrde
 
         // رقم الطلب
         const orderNumberCell = document.createElement('td');
-        orderNumberCell.textContent = order.orderNumber; // قراءة رقم الطلب الصحيح
+        orderNumberCell.textContent = order.orderNumber;
 
         // الإجمالي
         const totalPriceCell = document.createElement('td');
         totalPriceCell.textContent = `${order.totalPrice} ريال`;
 
+        // طريقة الدفع
+        const paymentMethodCell = document.createElement('td');
+        let paymentDetails = '';
+        if (order.payment) {
+            if (order.payment.mada > 0) {
+                paymentDetails += `مدى: ${order.payment.mada} ريال<br>`;
+            }
+            if (order.payment.cash > 0) {
+                paymentDetails += `كاش: ${order.payment.cash} ريال`;
+            }
+        } else {
+            paymentDetails = 'غير محدد';
+        }
+        paymentMethodCell.innerHTML = paymentDetails;
+
         // تاريخ الطلب
         const dateCell = document.createElement('td');
-        const orderDate = new Date(order.timestamp); // تحويل الطابع الزمني إلى تاريخ
+        const orderDate = new Date(order.timestamp);
         dateCell.textContent = orderDate.toLocaleDateString();
 
         // وقت الطلب
         const timeCell = document.createElement('td');
         timeCell.textContent = orderDate.toLocaleTimeString();
 
-        // عمود حذف الطلب
+        // تفاصيل الطلب
+        const detailsCell = document.createElement('td');
+        const detailsButton = document.createElement('button');
+        detailsButton.textContent = 'عرض';
+        detailsButton.onclick = () => {
+            showOrderDetailsWithSweetAlert(order);
+        };
+        detailsCell.appendChild(detailsButton);
+
+        // حذف الطلب
         const deleteCell = document.createElement('td');
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'حذف';
         deleteButton.classList.add('delete-btn');
         deleteButton.onclick = () => deleteOrder(index);
-
         deleteCell.appendChild(deleteButton);
 
         // إضافة الأعمدة إلى الصف
         mainRow.appendChild(orderNumberCell);
         mainRow.appendChild(totalPriceCell);
+        mainRow.appendChild(paymentMethodCell);
         mainRow.appendChild(dateCell);
         mainRow.appendChild(timeCell);
+        mainRow.appendChild(detailsCell);
         mainRow.appendChild(deleteCell);
 
         // إضافة الصف إلى الجدول
         mainTableBody.appendChild(mainRow);
-
-        // 2. إنشاء تفاصيل الطلب
-        const detailsTable = document.createElement('table');
-        detailsTable.classList.add('details-table');
-
-        const detailsHeader = `
-            <thead>
-                <tr>
-                    <th>العدد</th>
-                    <th>المنتج</th>
-                    <th>السعر</th>
-                </tr>
-            </thead>
-        `;
-
-        const detailsBody = document.createElement('tbody');
-        order.orders.forEach(item => {
-            const detailsRow = document.createElement('tr');
-
-            const countCell = document.createElement('td');
-            countCell.textContent = item.count;
-
-            const productCell = document.createElement('td');
-            productCell.textContent = item.product;
-
-            const priceCell = document.createElement('td');
-            priceCell.textContent = item.price;
-
-            detailsRow.appendChild(countCell);
-            detailsRow.appendChild(productCell);
-            detailsRow.appendChild(priceCell);
-            detailsBody.appendChild(detailsRow);
-        });
-
-        detailsTable.innerHTML = detailsHeader;
-        detailsTable.appendChild(detailsBody);
-
-        const orderDetailsTitle = document.createElement('h3');
-        orderDetailsTitle.textContent = `تفاصيل الطلب رقم ${order.orderNumber}`;
-        detailsContainer.appendChild(orderDetailsTitle);
-        detailsContainer.appendChild(detailsTable);
     });
-}
 
         // وظيفة لحذف جميع الطلبات
         function deleteAllOrders() {
@@ -351,24 +394,142 @@ document.getElementById('apply-filter-btn').addEventListener('click', filterOrde
 
 
 
-
 const REPORT_PASSWORD = "1234"; // الرقم السري المعرف مسبقًا
+
+// وظيفة عرض التقرير
 document.getElementById('show-report-btn').addEventListener('click', () => {
-    // طلب الرقم السري من المستخدم
-    const passwordInput = prompt("يرجى إدخال الرقم السري لعرض التقرير:");
+    Swal.fire({
+        title: 'إدخال الرقم السري',
+        input: 'password',
+        inputLabel: 'الرجاء إدخال الرقم السري لعرض التقرير',
+        inputPlaceholder: '******',
+        showCancelButton: true,
+        confirmButtonText: 'عرض التقرير',
+        cancelButtonText: 'إلغاء',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'يجب إدخال الرقم السري!';
+            }
+        }
+    }).then((result) => {
+        if (result.isDismissed) {
+            return; // إذا تم إلغاء الإدخال
+        }
 
-    if (passwordInput === REPORT_PASSWORD) {
-        // إذا كان الرقم السري صحيحًا
-        const orders = JSON.parse(localStorage.getItem('orders')) || [];
-        const totalOrders = orders.length;
-        const totalAmount = orders.reduce((sum, order) => sum + parseFloat(order.totalPrice || 0), 0);
+        const passwordInput = result.value;
 
-        // عرض التقرير
-        alert(`إجمالي عدد الطلبات: ${totalOrders}\nإجمالي المبالغ: ${totalAmount.toFixed(2)} ريال`);
-    } else {
-        // إذا كان الرقم السري خاطئًا
-        alert("الرقم السري غير صحيح! لا يمكنك عرض التقرير.");
-    }
+        if (passwordInput === REPORT_PASSWORD) {
+            // جلب البيانات من localStorage
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+            if (orders.length === 0) {
+                // عرض رسالة إذا لم توجد بيانات
+                Swal.fire({
+                    icon: 'info',
+                    title: 'لا توجد بيانات',
+                    text: 'لا توجد طلبات مسجلة لعرض التقرير.',
+                    confirmButtonText: 'حسناً'
+                });
+                return;
+            }
+
+            // حساب إجمالي الطلبات والمبالغ
+            const totalOrders = orders.length;
+            const totalAmount = orders.reduce((sum, order) => sum + parseFloat(order.totalPrice || 0), 0);
+
+            // حساب مبيعات المنتجات
+            const productSales = {};
+            orders.forEach(order => {
+                order.orders.forEach(item => {
+                    if (!productSales[item.product]) {
+                        productSales[item.product] = { total: 0, count: 0 };
+                    }
+                    productSales[item.product].total += parseFloat(item.price || 0);
+                    productSales[item.product].count += parseInt(item.count || 0);
+                });
+            });
+
+            // تحويل مبيعات المنتجات إلى مصفوفة مرتبة
+            const sortedProductSales = Object.entries(productSales)
+                .map(([product, data]) => ({ product, total: data.total, count: data.count }))
+                .sort((a, b) => b.total - a.total);
+
+            // حساب إجمالي مبيعات الكاش ومدى
+            let totalCash = 0;
+            let totalMada = 0;
+            orders.forEach(order => {
+                totalCash += parseFloat(order.payment?.cash || 0);
+                totalMada += parseFloat(order.payment?.mada || 0);
+            });
+
+            // إنشاء الجداول
+            const productSalesTable = `
+                <table border="1" style="width: 100%; margin: 10px 0; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>اسم المنتج</th>
+                            <th>إجمالي المبيعات (ريال)</th>
+                            <th>عدد المبيعات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${sortedProductSales.map(item => `
+                            <tr>
+                                <td>${item.product}</td>
+                                <td>${item.total}</td>
+                                <td>${item.count}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            const paymentSummaryTable = `
+                <table border="1" style="width: 100%; margin: 10px 0; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>طريقة الدفع</th>
+                            <th>إجمالي المبيعات (ريال)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>كاش</td>
+                            <td>${totalCash}</td>
+                        </tr>
+                        <tr>
+                            <td>مدى</td>
+                            <td>${totalMada}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+
+            // عرض التقرير باستخدام SweetAlert2
+            Swal.fire({
+                title: 'التقرير',
+                html: `
+                    <p><strong>إجمالي عدد الطلبات:</strong> ${totalOrders}</p>
+                    <p><strong>إجمالي المبالغ:</strong> ${totalAmount} ريال</p>
+                    <h3>تفاصيل المبيعات حسب المنتجات:</h3>
+                    ${productSalesTable}
+                    <h3>إجمالي المبيعات حسب طريقة الدفع:</h3>
+                    ${paymentSummaryTable}
+                    <button onclick="exportTablesToExcel()" style="margin-top: 10px; padding: 10px; font-size: 14px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">تصدير إلى Excel</button>
+                `,
+                icon: 'info',
+                confirmButtonText: 'إغلاق'
+            });
+        } else {
+            // إذا كان الرقم السري خاطئًا
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ!',
+                text: 'الرقم السري غير صحيح! لا يمكنك عرض التقرير.',
+                confirmButtonText: 'حسناً'
+            });
+        }
+    });
 });
 
 
@@ -431,29 +592,18 @@ function loadOrderToMainPage(order) {
     totalPriceElement.textContent = `${order.totalPrice} ريال`;
 }
 
+
+
+// ربط زر تعديل الطلب بوظيفة
 document.getElementById('edit-order-btn').addEventListener('click', () => {
     const orderNumber = parseInt(prompt("أدخل رقم الطلب الذي تريد تعديله:"));
-
-    if (isNaN(orderNumber) || orderNumber <= 0) {
+    if (isNaN(orderNumber)) {
         alert("يرجى إدخال رقم طلب صالح!");
         return;
     }
 
-    const savedOrders = JSON.parse(localStorage.getItem('orders')) || [];
-    const orderToEdit = savedOrders.find(order => order.orderNumber === orderNumber);
-
-    if (!orderToEdit) {
-        alert(`الطلب رقم ${orderNumber} غير موجود!`);
-        return;
-    }
-
-    // تخزين الطلب في localStorage
-    localStorage.setItem('editOrder', JSON.stringify(orderToEdit));
-
-    // الانتقال إلى الصفحة الرئيسية
-    window.location.href = 'index2.html';
+    editOrder(orderNumber);
 });
-
 
 // دالة تعديل الطلب
 function editOrder(orderNumber) {
@@ -523,6 +673,196 @@ function saveEditedOrder() {
 }
 
 
+function showOrderDetails(order) {
+    const detailsContainer = document.getElementById('orders-details-container');
+
+    // تفريغ أي تفاصيل سابقة
+    detailsContainer.innerHTML = '';
+
+    // إنشاء جدول جديد لتفاصيل الطلب
+    const detailsTable = document.createElement('table');
+    detailsTable.border = '1';
+    detailsTable.style.width = '100%';
+    detailsTable.style.margin = '10px 0';
+
+    // رأس الجدول
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML = `
+        <th>اسم المنتج</th>
+        <th>العدد</th>
+        <th>السعر</th>
+    `;
+    detailsTable.appendChild(headerRow);
+
+    // تعبئة الجدول بالتفاصيل
+    order.orders.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.product}</td>
+            <td>${item.count}</td>
+            <td>${item.price} ريال</td>
+        `;
+        detailsTable.appendChild(row);
+    });
+
+    // إضافة الجدول إلى الحاوية
+    detailsContainer.appendChild(detailsTable);
+
+    // عرض التفاصيل
+    detailsContainer.style.display = 'block';
+}
+
+
+
+
+function showOrderDetailsWithSweetAlert(order) {
+    // إنشاء نسخة من الجدول
+    let tableHTML = `
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://i.ibb.co/drZnrmK/bangalogo.png" alt="شعار" style="width: 100px; margin-bottom: 10px;">
+            <h2>فاتورة الطلب</h2>
+            <p><strong>رقم الطلب:</strong> ${order.orderNumber}</p>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; text-align: center; margin: 20px auto;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #000; padding: 8px;">العدد</th>
+                    <th style="border: 1px solid #000; padding: 8px;">المنتج</th>
+                    <th style="border: 1px solid #000; padding: 8px;">السعر</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    order.orders.forEach(item => {
+        tableHTML += `
+            <tr>
+                <td style="border: 1px solid #000; padding: 8px;">${item.count}</td>
+                <td style="border: 1px solid #000; padding: 8px;">${item.product}</td>
+                <td style="border: 1px solid #000; padding: 8px;">${item.price} ريال</td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+            </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 20px;">
+            <p><strong>الإجمالي:</strong> ${order.totalPrice} ريال</p>
+            <p><strong>طريقة الدفع:</strong> ${order.paymentMethod || 'غير محدد'}</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <p>شكراً لتعاملكم معنا</p>
+        </div>
+    `;
+
+    // عرض SweetAlert مع الجدول
+    Swal.fire({
+        title: `تفاصيل الطلب رقم ${order.orderNumber}`,
+        html: tableHTML,
+        width: '80%',
+        showCancelButton: true,
+        cancelButtonText: 'إغلاق',
+        confirmButtonText: 'طباعة الفاتورة',
+        preConfirm: () => {
+            // استدعاء دالة الطباعة عند الضغط على "طباعة الفاتورة"
+            printInvoice(order);
+        }
+    });
+}
+
+
+    const orderDetails = order.orders.map(item => `
+        <tr>
+            <td>${item.count}</td>
+            <td>${item.product}</td>
+            <td>${item.price} ريال</td>
+        </tr>
+    `).join('');
+
+    const orderTable = `
+        <table style="width: 100%; border-collapse: collapse; text-align: center;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #000; padding: 8px;">العدد</th>
+                    <th style="border: 1px solid #000; padding: 8px;">المنتج</th>
+                    <th style="border: 1px solid #000; padding: 8px;">السعر</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${orderDetails}
+            </tbody>
+        </table>
+    `;
+
+    Swal.fire({
+        title: `تفاصيل الطلب رقم ${order.orderNumber}`,
+        html: orderTable,
+        confirmButtonText: 'إغلاق',
+        width: '80%',
+    });
+
+
+
+orders.forEach(order => {
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+        <td>${order.orderNumber}</td>
+        <td>${order.paymentMethod || 'غير محدد'}</td>
+        <td>${order.totalPrice} ريال</td>
+        <td>
+            <button class="view-btn" onclick="showOrderDetailsWithSweetAlert(${JSON.stringify(order)})">عرض</button>
+        </td>
+    `;
+
+    document.getElementById('orders-body').appendChild(row);
+});
+
+
+
+
+function printInvoice(order) {
+    const printContent = `
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://i.ibb.co/drZnrmK/bangalogo.png" alt="شعار" style="width: 100px; margin-bottom: 10px;">
+            <h2>فاتورة الطلب</h2>
+            <p><strong>رقم الطلب:</strong> ${order.orderNumber}</p>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; text-align: center; margin: 20px auto;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #000; padding: 8px;">العدد</th>
+                    <th style="border: 1px solid #000; padding: 8px;">المنتج</th>
+                    <th style="border: 1px solid #000; padding: 8px;">السعر</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${order.orders.map(item => `
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px;">${item.count}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${item.product}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${item.price} ريال</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 20px;">
+            <p><strong>الإجمالي:</strong> ${order.totalPrice} ريال</p>
+            <p><strong>طريقة الدفع:</strong> ${order.paymentMethod || 'غير محدد'}</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <p>شكراً لتعاملكم معنا</p>
+        </div>
+    `;
+
+    const originalContent = document.body.innerHTML;
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
+    location.reload(); // تحديث الصفحة
+
+}
 
 
  </script>
