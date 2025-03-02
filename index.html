@@ -1,230 +1,27 @@
-
-
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عصيرات بنقا</title>
-    <link rel="stylesheet" href="styles2.css">
-    
+    <title>متابعة العصائر</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<!-- رابط CSS لـ SweetAlert2 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-<!-- رابط JavaScript لـ SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <body>
-    <div class="full-width-message">
-        نظام كاشير عصيرات بنقا - الحسا تركض
-    </div>
-    
-    <header>
-        <div class="container">
-            <!-- القسم الرئيسي -->
-            <div class="main-content">
+    <h1>🍹 متابعة العصائر</h1>
 
-        <div class="buttons-container">
-            <table class="buttons-table">
-               
-                <th colspan="8" id="custom-row"> الخلطات </th>  
-                    </tr>
-                    <tr>
-                        <td><button class="add-btn" onclick="addToTable('خلطة بنقا', 18)">خلطة بنقا</button></td>
-                        <td><button class="add-btn" onclick="addToTable('فبراير', 17)">فبراير</button></td>
-                        <td><button class="add-btn" onclick="addToTable('عرايسي', 17)">عرايسي</button></td>
-                        <td><button class="add-btn" onclick="addToTable('أمواج', 17)">أمواج</button></td>
-                        <td><button class="add-btn" onclick="addToTable('عوار قلب', 17)">عوار قلب</button></td>
-                        <td><button class="add-btn" onclick="addToTable('باور', 17)">باور</button></td>
-                        <td><button class="add-btn" onclick="addToTable('منقا افوكادو', 17)">منقا افوكادو</button></td>
-                        <td><button class="add-btn" onclick="addToTable('غروب', 17)">غروب</button></td>
-                    </tr>
-                    <tr>
-                <tr>
-                    <tr>
-                        <th colspan="8" id="custom-row">المنعشة</th>
-                       
-        
-                </tr>
-                <tr>
-                        <td><button class="add-btn" onclick="addToTable('حامض حلو', 16)">حامض حلو</button></td>
-                        <td><button class="add-btn" onclick="addToTable('ليمون نعناع', 14)">ليمون نعناع</button></td>
-                        <td><button class="add-btn" onclick="addToTable('منقا اناناس', 16)">منقا اناناس</button></td>
-                        <td><button class="add-btn" onclick="addToTable('برتقال أناناس', 16)">برتقال أناناس</button></td>
-                        <td><button class="add-btn" onclick="addToTable('أناناس رمان', 16)">أناناس رمان</button></td>
-                        <td><button class="add-btn" onclick="addToTable('شمندر برتقال', 14)">شمندر برتقال</button></td>
-                        <td><button class="add-btn" onclick="addToTable('شمندر رمان', 14)">شمندر رمان</button></td>
-                        <td><button class="add-btn" onclick="addToTable('شمندر برتقال رمان', 15)">شمندر برتقال رمان</button></td>
-                    </tr>
-            
-               
-
-
-
-                    <tr>
-                        <td><button class="add-btn" onclick="addToTable('شمندر تفاح', 15)">شمندر تفاح</button></td>
-                        <td><button class="add-btn" onclick="addToTable('شمندر عنب', 15)">شمندر عنب</button></td>
-                        <td><button class="add-btn" onclick="addToTable('شمندر جزر', 14)">شمندر جزر</button></td>
-                        <td><button class="add-btn" onclick="addToTable('برتقال رمان', 14)">برتقال رمان</button></td>
-                        <tr>
-                            <th colspan="8"id="custom-row">فواكه وآيسكريم  </th>  
-                    </tr>
-                    <tr>
-
-                        <td><button class="add-btn" onclick="addToTable('فراولة مكسيكي', 15)">فراولة مكسيكي</button></td>
-                        <td><button class="add-btn" onclick="addToTable('مانجو مكسيكي', 18)">مانجو مكسيكي</button></td>
-                        <td><button class="add-btn" onclick="addToTable('آيسكريم فانيلا', 9)">آيسكريم فانيلا</button></td>
-                        <td><button class="add-btn" onclick="addToTable('بركان مكس ', 19)">بركان مكس </button></td>
-                        <td><button class="add-btn" onclick="addToTable('بركان البنقا', 18)">بركان البنقا</button></td>
-                        <td><button class="add-btn" onclick="addToTable('بركان الفراولة', 18)">بركان الفراولة</button></td>
-                    
-                        <td><button class="add-btn" onclick="addToTable('فواكه مشكلة كبير', 45)">فواكه مشكلة كبير</button></td>
-                        <td><button class="add-btn" onclick="addToTable('فواكه مشكلة صغير', 21)">فواكه مشكلة صغير</button></td>
-
-                        <tr>
-                            <th colspan="8" id="custom-row">عصاير طبيعية   </th>  
-                    </tr>
-                    <tr>
-
-                        <td><button class="add-btn" onclick="addToTable('موز', 14)">موز</button></td>
-                        <td><button class="add-btn" onclick="addToTable('افوكادو', 16)">افوكادو</button></td>
-                        <td><button class="add-btn" onclick="addToTable('شمندر', 14)">شمندر</button></td>
-                        <td><button class="add-btn" onclick="addToTable('ليمون', 14)">ليمون</button></td>
-                        <td><button class="add-btn" onclick="addToTable('موز حليب', 14)">موز حليب</button></td>
-                        <td><button class="add-btn" onclick="addToTable('جزر', 14)">جزر</button></td>
-                        <td><button class="add-btn" onclick="addToTable('اناناس', 16)">اناناس</button></td>
-                        <td><button class="add-btn" onclick="addToTable('عصير تفاح', 13)">عصير تفاح</button></td>
-
-                    </tr>
-                    <tr>
-                        <td><button class="add-btn" onclick="addToTable('عصير فراولة', 16)">عصير فراولة</button></td>
-                        <td><button class="add-btn" onclick="addToTable('عصير مانجو', 16)">عصير مانجو</button></td>
-                        <td><button class="add-btn" onclick="addToTable('عصير رمان', 14)">عصير رمان</button></td>
-                        <td><button class="add-btn" onclick="addToTable('عصير برتقال', 13)">عصير برتقال</button></td>
-                        <tr>
-                           
-                        <tr>
-                            
-
-                            <td><button class="add-btn" onclick="addCustomPriceProduct()"  >
-                                إضافة 
-                            </button> </td>
-                            
-                            <td><button onclick="addCustomPriceProduct1()">إضافة منتج مخصص</button></td>
-
-                            <tr>
-
-                            
-                           
-                    <!-- القسم الرئيسي 
-
-                </tr>
-                <tr>
-                    <td colspan="4"><button1 class="clear-btn" onclick="clearTable()">محو الجدول</button1></td>
-                    <td colspan="4"><button1 class="print-btn" onclick="printAndClear()">طباعة جدول الطلبات</button1></td>
-                </tr>
-                -->
-            </table>
-        </div>
+    <div id="juice-buttons">
+        <button onclick="addJuice('مانجو')">مانجو</button>
+        <button onclick="addJuice('فراولة')">فراولة</button>
+        <button onclick="addJuice('برتقال')">برتقال</button>
+        <button onclick="addJuice('ليمون')">ليمون</button>
+        <button onclick="addJuice('رمان')">رمان</button>
     </div>
 
-    <aside class="sidebar">
-        <h2>الملخص</h2>
-        <button onclick="resetOrderNumber()">تجديد رقم الطلب</button>
+    <h2>📜 الطلبات المسجلة</h2>
+    <ul id="juice-list"></ul>
 
-        <ul>
-            <table id="order-table">
-                <thead>
-                    <tr>
-                        <th colspan="4">رقم الطلب: <span id="order-number">1</span></th>
-                    </tr>
-                    <tr>
-                        <th>العدد</th> 
-                        <th class="product-name">المنتج</th>
-                        <th>السعر</th>
-                        <th class="no-print">+ / - </th>
-                    </tr>
-                </thead>
-                
-                <tbody id="product-table-body">
-                    <!-- الطلبات ستضاف هنا -->
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="4" id="total-row">الإجمالي: <span id="total-price">0 ريال</span></td>
-                    </tr>
-                </tfoot>
-                
-            </table>
-           
-            <td><button class="clear-btn" onclick="clearTable()"> حذف كامل الطلب </button></td>
-            <!-- كاش  <td><button class="print-btn" onclick="printAndClear()"> دفع </button></td>-->
-            <td>  <button class="print-btn" onclick="printDirectly()">دفع</button> </td>
-            
-            
-            
-            
-            <div class="payment-options" style="text-align: center;">
-                <h3>طريقة الدفع</h3>
-            
-                <!-- مدى -->
-                <div style="margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
-                    <label style="font-size: 18px; margin-right: 10px; font-weight: bolder;">مدى:</label>
-                    <input type="number" id="mada-amount" placeholder="أدخل مبلغ مدى" oninput="updateMadaPayment()" 
-                           style="width: 40%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; margin-right: 10px;">
-                    <button onclick="setFullAmountToMada()" 
-                            style="padding: 10px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; width: 90px; height: 40px;">
-                        كامل المبلغ
-                    </button>
-                </div>
-            
-                <!-- كاش -->
-                <div style="margin-bottom: 20px; display: flex; justify-content: center; align-items: center;">
-                    <label style="font-size: 18px; margin-right: 10px; font-weight: bolder;">كاش:</label>
-                    <input type="number" id="cash-amount" placeholder="أدخل مبلغ كاش" oninput="updateCashPayment()" 
-                           style="width: 40%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; margin-right: 10px;">
-                    <button onclick="setFullAmountToCash()" 
-                            style="padding: 10px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; width: 90px; height: 40px;">
-                        كامل المبلغ
-                    </button>
-                </div>
-                <div id="cash-remaining" style="text-align: center; font-size: 16px; color: green; margin-top: 10px;"></div>
-            </div>
-
-            
-
-
-            
-        </ul>
-    </aside>
-    </div>
-    
-
-
-
-    
-   
-    <script src="script2.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
-<a href="saved-orders2.html" style="text-decoration: none; font-size: 18px; color: #007BFF;">عرض الطلبات السابقة</a>
-
-
-
-   <!-- الطلبات ستضاف هنا 
-
-
-<div style="margin-top: 20px; text-align: center;">
-    <h3>اختيار طريقة الدفع</h3>
-    <button onclick="selectPaymentMethod('مدى')" class="payment-button">مدى</button>
-    <button onclick="selectPaymentMethod('كاش')" class="payment-button">كاش</button>
-    <div id="mada-input-container" style="display: none; margin-top: 10px;">
-        <label for="mada-amount">المبلغ المدفوع عبر مدى:</label>
-        <input type="number" id="mada-amount" min="0" step="0.01" style="padding: 5px; width: 100px;">
-    </div>
-</div>
--->
