@@ -1,27 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متابعة العصائر</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <h1>🍹 متابعة العصائر</h1>
-
-    <div id="juice-buttons">
-        <button onclick="addJuice('مانجو')">مانجو</button>
-        <button onclick="addJuice('فراولة')">فراولة</button>
-        <button onclick="addJuice('برتقال')">برتقال</button>
-        <button onclick="addJuice('ليمون')">ليمون</button>
-        <button onclick="addJuice('رمان')">رمان</button>
-    </div>
-
-    <h2>📜 الطلبات المسجلة</h2>
-    <ul id="juice-list"></ul>
-
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
