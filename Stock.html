@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المخزون - عصيرات بنقا</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>إدارة المخزون</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>العصير</th>
+                    <th>المخزون الحالي</th>
+                    <th>إجراء</th>
+                </tr>
+            </thead>
+            <tbody id="stock-list"></tbody>
+        </table>
+    </div>
+    <script src="stock.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    direction: rtl;
+    margin: 0;
+    padding: 0;
+}
+
+/* ضبط الحاوية الرئيسية لتوزيع الأقسام بالتساوي */
+.container {
+    display: flex;
+    justify-content: center; /* يضمن أن الأقسام موزعة بالتساوي */
+    align-items: flex-start;
+    gap: 40px;
+    width: 90%;
+    max-width: 1300px;
+    margin: 20px auto;
+}
+
+/* ضبط المنتجات لتأخذ 4 أعمدة بشكل صحيح */
+.products {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+
+    flex-grow: 1; /* يجعل المنتجات تأخذ المساحة المتاحة بالكامل */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 أعمدة ثابتة */
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ضبط عرض المنتجات لمنع التكدس */
+#product-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* يجبر الأزرار على 4 أعمدة */
+    gap: 15px;
+}
+
+/* تنسيق ملخص الطلب */
+.order-summary {
+    width: 300px;
+    min-width: 250px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* تحسين شكل الأزرار */
+.products button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    height: 80px; /* توحيد ارتفاع الأزرار */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    min-width: 120px;
+}
+
+.products button:hover {
+    background-color: #e68900;
+}
+
+/* تحسين زر إتمام الطلب */
+.donebutton {
+    background-color: #1b905a;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+}
+
+
+
+/* تنسيق جدول ملخص الطلب */
+.order-summary table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.order-summary th, .order-summary td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.order-summary th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* تحسين مظهر ملخص الطلب */
+.order-summary {
+    width: 300px;
+    min-width: 250px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+/* تنسيق جدول المخزون */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* تنسيق زر تحديث المخزون */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* تنسيق قائمة الطلبات */
+#orders-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.order-item {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* تنسيق رأس كل طلب */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.order-header strong {
+    font-size: 18px;
+}
+
+.order-header small {
+    font-size: 14px;
+    color: gray;
+}
+
+/* تنسيق الجدول داخل الطلب */
+.order-item table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.order-item th, .order-item td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.order-item th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+
+
+/* تنسيق أزرار التنقل */
+.navigation {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.navigation button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.navigation button:hover {
+    background-color: #0056b3;
+}
+
+
+.product-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.product-button small {
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+}
+
+
+
+/* تحسين تصميم الطلبات */
+.order-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.order-item:hover {
+    transform: scale(1.02);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-header small {
+    font-size: 14px;
+    color: #777;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f8f8f8;
+    font-weight: bold;
+}
+
+td {
+    font-size: 16px;
+}
+
+.delete-item, .delete-order {
+    cursor: pointer;
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background 0.2s;
+}
+
+.delete-item:hover, .delete-order:hover {
+    background: darkred;
+}
+
+/* تحسين زر حذف الطلب بالكامل */
+.delete-order {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+}

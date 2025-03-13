@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقارير - عصيرات بنقا</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        .low-stock {
+            background-color: #ffdddd; /* ✅ لون أحمر للخلايا إذا كان المخزون المتبقي = 0 */
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>تقرير المبيعات</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>العصير</th>
+                    <th>المباع</th>
+                    <th>المخزون المتبقي</th> <!-- ✅ المخزون المتبقي فقط -->
+                </tr>
+            </thead>
+            <tbody id="report-list">
+                <tr>
+                    <td colspan="3">جاري تحميل البيانات...</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><strong>الإجمالي</strong></td>
+                    <td id="total-sold">-</td>
+                    <td id="total-remaining">-</td>
+                </tr>
+            </tfoot>
+            
+        </table>
+    </div>
+    <script src="reports.js"></script>
+</body>
+</html>

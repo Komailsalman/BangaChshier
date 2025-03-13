@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الطلبات - عصيرات بنقا</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="products">
+            <h2>المنتجات</h2>
+            <div id="product-list"></div> <!-- تأكد من أن `id` موجود -->
+        </div>
+        <div class="order-summary">
+            <h2>ملخص الطلب</h2>
+            <p><strong>رقم الطلب:</strong> <span id="order-id">جاري التوليد...</span></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>العصير</th>
+                        <th>الكمية</th>
+                        <th>السعر</th>
+                    </tr>
+                </thead>
+                <tbody id="order-items"></tbody>
+            </table>
+            <p><strong>الإجمالي:</strong> <span id="total-price">0</span> ريال</p>
+            <button class="donebutton" id="submit-order">إتمام الطلب</button>
+        </div>
+    </div>
+    <div class="navigation">
+        <button onclick="location.href='stock.html'">إدارة المخزون</button>
+        <button onclick="location.href='orders.html'">عرض الطلبات</button>
+        <button onclick="location.href='reports.html'">تقرير المبيعات</button>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
