@@ -240,3 +240,16 @@ window.onload = function () {
 
     displayProducts();
 };
+
+
+
+function calculateRemaining() {
+    const totalAmount = parseFloat(document.getElementById("totalAmount").textContent) || 0;
+
+    document.getElementById("remainingTo50").textContent = Math.max(50 - totalAmount, 0);
+    document.getElementById("remainingTo100").textContent = Math.max(100 - totalAmount, 0);
+    document.getElementById("remainingTo150").textContent = Math.max(150 - totalAmount, 0);
+}
+
+// 🔹 استدعاء الدالة بعد تحديث الإجمالي تلقائيًا
+setInterval(calculateRemaining, 500); // تحديث كل نصف ثانية
