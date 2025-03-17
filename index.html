@@ -32,6 +32,20 @@
             <p>المتبقي للوصول إلى 50 ريال: <span id="remainingTo50">50</span> ريال</p>
 <p>المتبقي للوصول إلى 100 ريال: <span id="remainingTo100">100</span> ريال</p>
 <p>المتبقي للوصول إلى 150 ريال: <span id="remainingTo150">150</span> ريال</p>
+<script>
+function calculateRemaining() {
+    const totalAmount = parseFloat(document.getElementById("totalAmount").textContent) || 0;
+
+    document.getElementById("remainingTo50").textContent = Math.max(50 - totalAmount, 0);
+    document.getElementById("remainingTo100").textContent = Math.max(100 - totalAmount, 0);
+    document.getElementById("remainingTo150").textContent = Math.max(150 - totalAmount, 0);
+}
+
+// 🔹 استدعاء الدالة بعد تحديث الإجمالي تلقائيًا
+setInterval(calculateRemaining, 500); // تحديث كل نصف ثانية
+
+</script>
+
             <button class="donebutton" id="submit-order">إتمام الطلب</button>
         </div>
     </div>
