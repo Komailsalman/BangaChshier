@@ -37,7 +37,7 @@ window.onload = function () {
         { id: "10", name: "رمان ليمون نعناع", price: 19 },
         { id: "8", name: "رمان", price: 19 },
         { id: "9", name: "برتقال", price: 19 },
-      { id: "11", name: "مانجو", price: 28 },
+      { id: "11", name: "مانجو", price: 19 },
         
     ];
 
